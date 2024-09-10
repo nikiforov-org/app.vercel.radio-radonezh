@@ -1,0 +1,25 @@
+/* Your app custom styles here */
+
+// Light mode
+.logo {
+    margin: 0 auto !important;
+
+    svg {
+        display: block;
+
+        .l {
+            fill: #dd3432;
+        }
+    }
+}
+
+// Dark mode
+.dark {
+    .logo {
+        svg {
+            .l {
+                fill: #c4c6d0;
+            }
+        }
+    }
+}
