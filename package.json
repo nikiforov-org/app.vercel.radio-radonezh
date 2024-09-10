@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "Radonezh PWA",
-  "repository": "",
+  "repository": "https://github.com/nikiforov-org/app.web.radio-radonezh",
   "license": "UNLICENSED",
   "scripts": {
     "start": "npm run dev",
@@ -20,7 +20,7 @@
   "dependencies": {
     "dom7": "^4.0.6",
     "firebase": "^10.13.1",
-    "framework7": "^8.3.3",
+    "framework7": "^1.7.1",
     "framework7-icons": "^5.0.5",
     "framework7-react": "^8.3.3",
     "material-icons": "^1.13.12",
