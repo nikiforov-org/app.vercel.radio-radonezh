@@ -35,7 +35,7 @@ const RadonezhApp = () => {
 
   // Framework7 Parameters
   const f7params = {
-    name: 'Radonezh PWA', // App name
+    name: 'Радонеж', // App name
     theme: 'auto', // Automatic theme detection
 
     darkMode: true,
