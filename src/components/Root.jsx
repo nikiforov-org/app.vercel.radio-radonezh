@@ -65,8 +65,9 @@ const RadonezhApp = () => {
   return (
     <App {...f7params}>
 
-
-
+      <div id="installScreen">
+        Hi
+      </div>
 
       {/* Views/Tabs container */}
       <Views tabs className="safe-areas">
