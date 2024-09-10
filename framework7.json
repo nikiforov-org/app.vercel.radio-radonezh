@@ -3,7 +3,7 @@
   "type": [
     "pwa"
   ],
-  "name": "Radonezh PWA",
+  "name": "Радонеж",
   "framework": "react",
   "template": "tabs",
   "bundler": "vite",

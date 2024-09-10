@@ -1,8 +1,8 @@
 {
-  "name": "Radonezh PWA",
-  "short_name": "Radonezh PWA",
-  "description": "Radonezh PWA",
-  "lang": "en-US",
+  "name": "Радонеж",
+  "short_name": "Радонеж",
+  "description": "Радонеж",
+  "lang": "ru-ru",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#EE350F",
