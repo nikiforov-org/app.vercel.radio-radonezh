@@ -28,6 +28,8 @@ import {
 import routes from '../js/routes';
 import store from '../js/store';
 
+import InstallScrren from './InstallScreen';
+
 const RadonezhApp = () => {
   // Login screen demo data
   // const [username, setUsername] = useState('');
@@ -65,9 +67,7 @@ const RadonezhApp = () => {
   return (
     <App {...f7params}>
 
-      <div id="installScreen">
-        Hi
-      </div>
+      <InstallScrren />
 
       {/* Views/Tabs container */}
       <Views tabs className="safe-areas">

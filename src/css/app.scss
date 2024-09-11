@@ -1,6 +1,6 @@
 /* Your app custom styles here */
 
-#installScreen {
+#InstallScreen {
     display: none;
     position: absolute;
     top: 0;
@@ -12,7 +12,7 @@
 }
 
 @media (display-mode: browser) {
-    #installScreen {
+    #InstallScreen {
         display: block;
     }
 }
