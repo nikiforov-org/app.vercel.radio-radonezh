@@ -1,22 +1,5 @@
 /* Your app custom styles here */
 
-#InstallScreen {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 9999;
-    background: #000;
-}
-
-@media (display-mode: browser) {
-    #InstallScreen {
-        display: block;
-    }
-}
-
 // Light mode
 .logo {
     margin: 0 auto !important;

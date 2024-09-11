@@ -1,4 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import {
+    View,
+    Button,
+    Popup,
+    Page,
+    Block
+} from 'framework7-react';
+import NavBar from './NavBar';
 
 const InstallScreen = () => {
     const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -34,16 +42,22 @@ const InstallScreen = () => {
     };
 
     return (
-        <div id="InstallScreen">
-            <h1>Добро пожаловать в наше приложение!</h1>
-            {isInstallable ? (
-                <button onClick={handleInstallClick}>
-                    Установить приложение на главный экран
-                </button>
-            ) : (
-                <p>Приложение уже установлено или установка недоступна</p>
-            )}
-        </div>
+        <Popup opened tabletFullscreen>
+            <View>
+                <Page>
+                    <NavBar />
+                    <Block>
+                        {isInstallable ? (
+                            <Button onClick={handleInstallClick} fill round>
+                                Установить
+                            </Button>
+                        ) : (
+                            <p>Приложение уже установлено или установка недоступна</p>
+                        )}
+                    </Block>
+                </Page>
+            </View>
+        </Popup>
     );
 };
 
