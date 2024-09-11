@@ -36,10 +36,12 @@ const InstallScreen = () => {
     return (
         <div id="InstallScreen">
             <h1>Добро пожаловать в наше приложение!</h1>
-            {isInstallable && (
+            {isInstallable ? (
                 <button onClick={handleInstallClick}>
                     Установить приложение на главный экран
                 </button>
+            ) : (
+                <p>Приложение уже установлено или установка недоступна</p>
             )}
         </div>
     );
