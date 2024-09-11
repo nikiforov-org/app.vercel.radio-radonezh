@@ -4,7 +4,8 @@ import {
     Button,
     Popup,
     Page,
-    Block
+    Block,
+    Icon
 } from 'framework7-react';
 import NavBar from './NavBar';
 
@@ -58,9 +59,11 @@ const InstallScreen = () => {
                     <NavBar />
                     <Block>
                         {isInstallable ? (
-                            <Button onClick={handleInstallClick} fill round>
-                                Установить
-                            </Button>
+                            <>
+                                <Button onClick={handleInstallClick} fill round>
+                                    Установить
+                                </Button>
+                            </>
                         ) : (
                             isIphone ? (
                                 <>
@@ -69,6 +72,7 @@ const InstallScreen = () => {
                                         <li>Выберите «На экран “Домой”» <Icon f7="plus_square"></Icon></li>
                                         <li>Нажмите «Добавить» в правом верхнем углу</li>
                                     </ol>
+
                                     <p>Готово! Теперь приложение «Радонеж» установлено на главный экран.</p>
                                 </>
                             ) : (
