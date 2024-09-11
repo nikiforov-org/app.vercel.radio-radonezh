@@ -20,7 +20,7 @@ const RadonezhApp = () => {
     name: 'Радонеж', // App name
     theme: 'auto', // Automatic theme detection
 
-    darkMode: true,
+    //darkMode: true,
 
     // App store
     store: store,

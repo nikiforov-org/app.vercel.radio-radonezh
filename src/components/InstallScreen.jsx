@@ -11,16 +11,18 @@ import NavBar from './NavBar';
 const InstallScreen = () => {
     const [deferredPrompt, setDeferredPrompt] = useState(null);
     const [isInstallable, setIsInstallable] = useState(false);
-    const [isInstalled, setIsInstalled] = useState(false);
+    const [isIphone, setIsIphone] = useState(false);
 
     useEffect(() => {
-        const checkIfInstalled = () => {
-            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-            setIsInstalled(isStandalone);
+        const checkIfIphone = () => {
+            const isIphoneDevice = /iPhone/i.test(navigator.userAgent) || /iPhone/i.test(navigator.platform);
+            setIsIphone(isIphoneDevice);
         };
 
-        checkIfInstalled();
+        checkIfIphone();
+    }, []);
 
+    useEffect(() => {
         const handleBeforeInstallPrompt = (e) => {
             e.preventDefault();
             setDeferredPrompt(e);
@@ -28,11 +30,9 @@ const InstallScreen = () => {
         };
 
         window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-        window.addEventListener('appinstalled', checkIfInstalled);
 
         return () => {
             window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-            window.removeEventListener('appinstalled', checkIfInstalled);
         };
     }, []);
 
@@ -51,39 +51,31 @@ const InstallScreen = () => {
         }
     };
 
-    const openApp = () => {
-        window.location.href = window.location.origin;
-    };
-
     return (
         <Popup opened tabletFullscreen>
             <View>
                 <Page>
                     <NavBar />
                     <Block>
-                        {isInstalled ? (
-                            <>
-                                <p>Приложение уже установлено</p>
-                                <Button onClick={openApp} fill round>
-                                    Открыть
-                                </Button>
-                            </>
-
+                        {isInstallable ? (
+                            <Button onClick={handleInstallClick} fill round>
+                                Установить
+                            </Button>
                         ) : (
-                            <>
-                                {isInstallable ? (
-                                    <>
-                                        <p>Установить приложение на главный экран</p>
-                                        <Button onClick={handleInstallClick} fill round>
-                                            Установить
-                                        </Button>
-                                    </>
-                                ) : (
-                                    <>
-                                        <p>Приложение уже установлено или установка недоступна</p>
-                                    </>
-                                )}
-                            </>
+                            isIphone ? (
+                                <>
+                                    <ol>
+                                        <li>Нажмите кнопку «Поделиться» <Icon f7="square_arrow_up"></Icon></li>
+                                        <li>Выберите «На экран “Домой”» <Icon f7="plus_square"></Icon></li>
+                                        <li>Нажмите «Добавить» в правом верхнем углу</li>
+                                    </ol>
+                                    <p>Готово! Теперь приложение «Радонеж» установлено на главный экран.</p>
+                                </>
+                            ) : (
+                                <>
+                                    <p>Приложение уже установлено или установка недоступна</p>
+                                </>
+                            )
                         )}
                     </Block>
                 </Page>
