@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   f7ready,
   App,
@@ -6,7 +6,8 @@ import {
   Toolbar,
   Link,
   Tabs,
-  Tab
+  Tab,
+  View
 } from 'framework7-react';
 
 import InstallScreen from './InstallScreen';
@@ -17,23 +18,6 @@ import Help from '../pages/help';
 import More from '../pages/more';
 
 const RadonezhApp = () => {
-  const [isStandalone, setIsStandalone] = useState(false);
-
-  useEffect(() => {
-    const checkStandalone = () => {
-      const standalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
-      setIsStandalone(standalone);
-    };
-
-    checkStandalone();
-
-    window.matchMedia('(display-mode: standalone)').addEventListener('change', checkStandalone);
-
-    return () => {
-      window.matchMedia('(display-mode: standalone)').removeEventListener('change', checkStandalone);
-    };
-  }, []);
-
   // Framework7 Parameters
   const appParams = {
     name: 'Радонеж', // App name
@@ -49,30 +33,36 @@ const RadonezhApp = () => {
     // Call F7 APIs here
   });
 
+  const getData = () => {
+    return;
+  }
+
   return (
     <App {...appParams}>
-      <Page pageContent={false}>
-        <NavBar />
-        <Toolbar tabbar icons bottom>
-          <Link tabLink="#radio" iconF7="music_note_2" text="Радио" tabLinkActive />
-          <Link tabLink="#help" iconF7="money_rubl" text="Помощь" />
-          <Link tabLink="#more" iconF7="ellipsis" text="Ещё" />
-        </Toolbar>
+      <View main>
+        <Page pageContent={false} ptr ptrMousewheel={true} onPtrRefresh={getData}>
+          <NavBar />
+          <Toolbar bottom tabbar icons>
+            <Link tabLink="#radio" iconF7="music_note_2" text="Радио" tabLinkActive />
+            <Link tabLink="#help" iconF7="money_rubl" text="Помощь" />
+            <Link tabLink="#more" iconF7="ellipsis" text="Ещё" />
+          </Toolbar>
 
-        <Tabs swipeable>
-          <Tab id="radio" className="page-content" tabActive>
-            <Radio />
-          </Tab>
-          <Tab id="help" className="page-content">
-            <Help />
-          </Tab>
-          <Tab id="more" className="page-content">
-            <More />
-          </Tab>
-        </Tabs>
-      </Page>
+          <Tabs swipeable>
+            <Tab id="radio" className="page-content" tabActive>
+              <Radio />
+            </Tab>
+            <Tab id="help" className="page-content">
+              <Help />
+            </Tab>
+            <Tab id="more" className="page-content">
+              <More />
+            </Tab>
+          </Tabs>
+        </Page>
 
-      {!isStandalone && <InstallScreen />}
+        {!(window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches) && <InstallScreen />}
+      </View>
     </App>
   );
 };

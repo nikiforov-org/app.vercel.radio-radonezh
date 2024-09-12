@@ -1,30 +1,19 @@
 import React from 'react';
 import {
-    Page,
-    Navbar,
-    NavLeft,
-    NavTitle,
-    NavTitleLarge,
-    NavRight,
-    Link,
-    Toolbar,
     Block,
-    BlockTitle,
     List,
     ListItem,
-    Button,
     Icon
 } from 'framework7-react';
-import NavBar from '../components/NavBar';
 
 const share = () => {
-
+    return;
 }
 
 const More = () => {
 
     return (
-        <Page>
+        <Block>
             <List dividers outline strong inset>
                 <ListItem title='Поделиться' click={share}>
                     <Icon slot='media' f7='arrowshape_turn_up_right' />
@@ -39,7 +28,7 @@ const More = () => {
                     <Icon slot="media" f7="info_circle" />
                 </ListItem>
             </List>
-        </Page>
+        </Block>
     )
 };
 export default More;

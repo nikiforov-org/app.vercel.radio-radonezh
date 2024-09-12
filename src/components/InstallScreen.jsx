@@ -113,23 +113,29 @@ const InstallScreen = () => {
                                             </li>
                                         </ol>
                                         <br />
-                                        <p className='text-align-center'>Готово! Теперь приложение «Радонеж» установлено на главный экран.</p>
+                                        <p className='text-align-center'>Готово! Теперь PWA «Радонеж» установлено на главный экран.</p>
                                     </>
                                 )}
                                 {(isInstalled && !isIphone) && (
                                     <>
-                                        <p>Поздравляем, приложение установлено на Ваше устройство!</p>
+                                        <p className='text-align-center'>Готово! Теперь PWA «Радонеж» установлено на главный экран.</p>
                                     </>
                                 )}
-                                {!(isInstalled || isInstallable || isIphone) && (
-                                    <>
-                                        <p>Нажмите «<Icon f7="xmark" size={16} />» в правом верхнем углу, чтобы продолжить в браузере.</p>
-                                    </>
-                                )}
+
                             </CardContent>
                             {(isInstallable && !isIphone && !isInstalled) && (
                                 <CardFooter className='justify-content-center'>
                                     <Button onClick={handleInstallClick} fill round>Установить</Button>
+                                </CardFooter>
+                            )}
+                            {(isInstalled && window.matchMedia('(display-mode: standalone)').matches) && (
+                                <CardFooter className='justify-content-center'>
+                                    <Button popupClose fill round>Начать</Button>
+                                </CardFooter>
+                            )}
+                            {!(isInstalled || isInstallable || isIphone) && (
+                                <CardFooter className='justify-content-center'>
+                                    <Button popupClose fill round>Продолжить в браузере</Button>
                                 </CardFooter>
                             )}
                         </Card>

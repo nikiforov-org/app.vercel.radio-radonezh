@@ -1,18 +1,6 @@
 import React from 'react';
 import {
-    Page,
-    Navbar,
-    NavLeft,
-    NavTitle,
-    NavTitleLarge,
-    NavRight,
-    Link,
-    Toolbar,
     Block,
-    BlockTitle,
-    List,
-    ListItem,
-    Button,
     Card
 } from 'framework7-react';
 import NavBar from '../components/NavBar';
@@ -20,9 +8,9 @@ import NavBar from '../components/NavBar';
 const Help = () => {
 
     return (
-        <Page>
+        <Block>
             <Card content="Help" />
-        </Page>
+        </Block>
     )
 };
 export default Help;
