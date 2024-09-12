@@ -20,9 +20,8 @@ import NavBar from '../components/NavBar';
 const Help = () => {
 
     return (
-        <Page name="help">
-            <NavBar />
-            <Card content="This is a simple card with plain text, but cards can also contain their own header, footer, list view, image, or any other element." />
+        <Page>
+            <Card content="Help" />
         </Page>
     )
 };

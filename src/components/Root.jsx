@@ -3,16 +3,19 @@ import React from 'react';
 import {
   f7ready,
   App,
-  Views,
-  View,
+  Page,
   Toolbar,
   Link,
+  Tabs,
+  Tab
 } from 'framework7-react';
 
-
-import routes from '../js/routes';
-import store from '../js/store';
 import InstallScreen from './InstallScreen';
+import NavBar from './NavBar';
+
+import Radio from '../pages/radio'
+import Help from '../pages/help';
+import More from '../pages/more';
 
 const RadonezhApp = () => {
   // Framework7 Parameters
@@ -21,11 +24,6 @@ const RadonezhApp = () => {
     theme: 'auto', // Automatic theme detection
 
     darkMode: window.matchMedia('(prefers-color-scheme: dark)'),
-
-    // App store
-    store: store,
-    // App routes
-    routes: routes,
 
     // Register service worker (only on production build)
     serviceWorker: process.env.NODE_ENV === 'production' ? {
@@ -40,18 +38,27 @@ const RadonezhApp = () => {
   return (
     <App {...appParams}>
 
-      <Views tabs className="safe-areas">
+      <Page pageContent={false}>
+        <NavBar />
         <Toolbar tabbar icons bottom>
-          <Link tabLink="#view-radio" tabLinkActive iconF7="music_note_2" text="Радио" />
-          <Link tabLink="#view-help" iconF7="money_rubl" text="Помощь" />
-          <Link tabLink="#view-more" iconF7="ellipsis" text="Ещё" />
+          <Link tabLink="#radio" iconF7="music_note_2" text="Радио" tabLinkActive />
+          <Link tabLink="#help" iconF7="money_rubl" text="Помощь" />
+          <Link tabLink="#more" iconF7="ellipsis" text="Ещё" />
         </Toolbar>
 
-        <View id="view-radio" main tab tabActive url="/" />
-        <View id="view-help" name="help" tab url="/help/" />
-        <View id="view-more" name="more" tab url="/more/" />
+        <Tabs swipeable>
+          <Tab id="radio" className="page-content" tabActive>
+            <Radio />
+          </Tab>
+          <Tab id="help" className="page-content">
+            <Help />
+          </Tab>
+          <Tab id="more" className="page-content">
+            <More />
+          </Tab>
+        </Tabs>
 
-      </Views>
+      </Page>
 
       {window.matchMedia('(display-mode: browser)').matches && <InstallScreen />}
 

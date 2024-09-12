@@ -24,9 +24,8 @@ const getData = () => {
 const Radio = () => {
 
     return (
-        <Page name="radio" ptr ptrMousewheel={true} onPtrRefresh={getData}>
-            <NavBar />
-            <Card content="This is a simple card with plain text, but cards can also contain their own header, footer, list view, image, or any other element." />
+        <Page ptr ptrMousewheel={true} onPtrRefresh={getData}>
+            <Card content="Radio" />
         </Page>
     )
 };

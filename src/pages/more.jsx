@@ -25,7 +25,6 @@ const More = () => {
 
     return (
         <Page>
-            <NavBar />
             <List dividers outline strong inset>
                 <ListItem title='Поделиться' click={share}>
                     <Icon slot='media' f7='arrowshape_turn_up_right' />
