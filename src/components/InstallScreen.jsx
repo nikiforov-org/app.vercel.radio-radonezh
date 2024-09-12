@@ -72,11 +72,11 @@ const InstallScreen = () => {
     };
 
     return (
-        <Popup opened tabletFullscreen={!(!isInstalled && !isInstallable && !isIphone)}>
+        <Popup opened tabletFullscreen={(isInstalled || isInstallable || isIphone)}>
             <View>
                 <Page>
-                    <Navbar title={`${(!isInstalled && !isInstallable && !isIphone) ? '' : 'Установка '}PWA «Радонеж»`}>
-                        {!isInstallable && (
+                    <Navbar title={`${(isInstalled && !isInstallable && !isIphone) ? '' : 'Установка '}PWA «Радонеж»`}>
+                        {!(isInstalled || isInstallable || isIphone) && (
                             <NavRight>
                                 <Link popupClose>
                                     <Icon f7="xmark"></Icon>
@@ -121,7 +121,7 @@ const InstallScreen = () => {
                                         <p>Поздравляем, приложение установлено на Ваше устройство!</p>
                                     </>
                                 )}
-                                {(!isInstalled && !isInstallable && !isIphone) && (
+                                {!(isInstalled || isInstallable || isIphone) && (
                                     <>
                                         <p>Нажмите «<Icon f7="xmark" size={16} />» в правом верхнем углу, чтобы продолжить в браузере.</p>
                                     </>
