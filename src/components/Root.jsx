@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { useState, useEffect } from 'react';
 import {
   f7ready,
   App,
@@ -13,18 +12,33 @@ import {
 import InstallScreen from './InstallScreen';
 import NavBar from './NavBar';
 
-import Radio from '../pages/radio'
+import Radio from '../pages/radio';
 import Help from '../pages/help';
 import More from '../pages/more';
 
 const RadonezhApp = () => {
+  const [isStandalone, setIsStandalone] = useState(false);
+
+  useEffect(() => {
+    const checkStandalone = () => {
+      const standalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+      setIsStandalone(standalone);
+    };
+
+    checkStandalone();
+
+    window.matchMedia('(display-mode: standalone)').addEventListener('change', checkStandalone);
+
+    return () => {
+      window.matchMedia('(display-mode: standalone)').removeEventListener('change', checkStandalone);
+    };
+  }, []);
+
   // Framework7 Parameters
   const appParams = {
     name: 'Радонеж', // App name
     theme: 'auto', // Automatic theme detection
-
-    darkMode: window.matchMedia('(prefers-color-scheme: dark)'),
-
+    darkMode: window.matchMedia('(prefers-color-scheme: dark)').matches,
     // Register service worker (only on production build)
     serviceWorker: process.env.NODE_ENV === 'production' ? {
       path: '/service-worker.js',
@@ -37,7 +51,6 @@ const RadonezhApp = () => {
 
   return (
     <App {...appParams}>
-
       <Page pageContent={false}>
         <NavBar />
         <Toolbar tabbar icons bottom>
@@ -57,12 +70,11 @@ const RadonezhApp = () => {
             <More />
           </Tab>
         </Tabs>
-
       </Page>
 
-      {window.matchMedia('(display-mode: browser)').matches && <InstallScreen />}
-
+      {!isStandalone && <InstallScreen />}
     </App>
-  )
-}
+  );
+};
+
 export default RadonezhApp;

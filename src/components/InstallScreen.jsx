@@ -75,7 +75,7 @@ const InstallScreen = () => {
         <Popup opened tabletFullscreen={(isInstalled || isInstallable || isIphone)}>
             <View>
                 <Page>
-                    <Navbar title={`${(isInstalled && !isInstallable && !isIphone) ? '' : 'Установка '}PWA «Радонеж»`}>
+                    <Navbar title={`${(isInstalled || isInstallable || isIphone) ? 'Установка ' : ''}PWA «Радонеж»`}>
                         {!(isInstalled || isInstallable || isIphone) && (
                             <NavRight>
                                 <Link popupClose>
