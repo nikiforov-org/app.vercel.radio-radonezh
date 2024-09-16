@@ -8,10 +8,9 @@ const PUBLIC_DIR = path.resolve(__dirname, './public');
 const BUILD_DIR = path.resolve(__dirname, './www',);
 export default async () => {
 
-  return  {
+  return {
     plugins: [
       react(),
-
     ],
     root: SRC_DIR,
     base: '',

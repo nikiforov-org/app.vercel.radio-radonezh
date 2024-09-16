@@ -61,7 +61,10 @@ const RadonezhApp = () => {
           </Tabs>
         </Page>
 
-        {!(window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches) && <InstallScreen />}
+        {process.env.NODE_ENV === 'production' &&
+          !(window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches) && <InstallScreen />
+        }
+
       </View>
     </App>
   );

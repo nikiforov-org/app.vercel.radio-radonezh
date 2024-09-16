@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Block,
     List,
@@ -6,18 +6,40 @@ import {
     Icon
 } from 'framework7-react';
 
-const share = () => {
-    return;
-}
-
 const More = () => {
+    const [isShareSupported, setIsShareSupported] = useState(false);
+
+    useEffect(() => {
+        if (navigator.share) {
+            setIsShareSupported(true);
+        }
+    }, []);
+
+    const share = () => {
+        if (navigator.share) {
+            navigator.share({
+                title: 'PWA «Радонеж»',
+                text: 'Прогрессивное веб-приложение, которое может работать на разных устройствах и не зависит от магазинов приложений. \
+                    Установите его на свой телефон, чтобы легко и удобно слушать любимые передачи!',
+                url: window.location.href,
+            })
+                .then(() => {
+                    f7.dialog.alert('Успешно поделились');
+                })
+                .catch((error) => {
+                    f7.dialog.alert(`Ошибка при попытке поделиться: ${error}`);
+                });
+        }
+    };
 
     return (
         <Block>
-            <List dividers outline strong inset>
-                <ListItem title='Поделиться' click={share}>
-                    <Icon slot='media' f7='arrowshape_turn_up_right' />
-                </ListItem>
+            <List strong inset>
+                {isShareSupported && (
+                    <ListItem title='Поделиться' onClick={share}>
+                        <Icon slot='media' f7='arrowshape_turn_up_right' />
+                    </ListItem>
+                )}
                 <ListItem title='Перейти на сайт' href='https://radonezh.ru' target='_blank' external>
                     <Icon slot="media" f7="globe" />
                 </ListItem>
@@ -29,6 +51,7 @@ const More = () => {
                 </ListItem>
             </List>
         </Block>
-    )
+    );
 };
+
 export default More;

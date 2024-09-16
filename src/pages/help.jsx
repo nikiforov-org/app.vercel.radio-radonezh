@@ -3,7 +3,6 @@ import {
     Block,
     Card
 } from 'framework7-react';
-import NavBar from '../components/NavBar';
 
 const Help = () => {
 
