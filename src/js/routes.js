@@ -1,4 +1,15 @@
+import SettingsPage from '../pages/settings.jsx';
 
+const routes = [
+  {
+    path: '/settings/',
+    component: SettingsPage,
+  },
+];
+
+export default routes;
+
+/*
 import Radio from '../pages/radio.jsx';
 import Help from '../pages/help.jsx';
 import More from '../pages/more.jsx';
@@ -110,3 +121,4 @@ var routes = [
 ];
 
 export default routes;
+*/

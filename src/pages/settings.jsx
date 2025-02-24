@@ -1,120 +1,66 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
-  Page,
-  Navbar,
-  List,
-  ListInput,
-  ListItem,
-  Toggle,
-  BlockTitle,
-  Button,
-  Range,
-  Block,
+    Page,
+    Navbar,
+    BlockTitle,
+    List,
+    ListItem,
+    f7
 } from 'framework7-react';
 
-const SettingsPage = () => (
-  <Page name="settings">
-    <Navbar title="Settings" />
+const SettingsPage = () => {
+    const [darkMode, setDarkMode] = useState(!!Number(localStorage.getItem('darkMode')));
+    const [bitrate, setBitrate] = useState(localStorage.getItem('bitrate'));
 
-    <BlockTitle>Form Example</BlockTitle>
-    <List strongIos outlineIos dividersIos>
-      <ListInput label="Name" type="text" placeholder="Your name"></ListInput>
+    const handleThemeChange = (value) => {
+        setDarkMode(!!value);
+        localStorage.setItem('darkMode', value.toString());
+        f7.setDarkMode(!!value);
+    };
 
-      <ListInput label="E-mail" type="email" placeholder="E-mail"></ListInput>
+    const handleBitrate = (value) => {
+        setBitrate(value);
+        localStorage.setItem('bitrate', value)
+    }
 
-      <ListInput label="URL" type="url" placeholder="URL"></ListInput>
-
-      <ListInput label="Password" type="password" placeholder="Password"></ListInput>
-
-      <ListInput label="Phone" type="tel" placeholder="Phone"></ListInput>
-
-      <ListInput label="Gender" type="select">
-        <option>Male</option>
-        <option>Female</option>
-      </ListInput>
-
-      <ListInput
-        label="Birth date"
-        type="date"
-        placeholder="Birth day"
-        defaultValue="2014-04-30"
-      ></ListInput>
-
-      <ListItem title="Toggle">
-        <Toggle slot="after" />
-      </ListItem>
-
-      <ListInput label="Range" input={false}>
-        <Range slot="input" value={50} min={0} max={100} step={1} />
-      </ListInput>
-
-      <ListInput type="textarea" label="Textarea" placeholder="Bio"></ListInput>
-      <ListInput type="textarea" label="Resizable" placeholder="Bio" resizable></ListInput>
-    </List>
-
-    <BlockTitle>Buttons</BlockTitle>
-    <Block strongIos outlineIos className="grid grid-cols-2 grid-gap">
-      <Button>Button</Button>
-      <Button fill>Fill</Button>
-
-      <Button raised>Raised</Button>
-      <Button raised fill>
-        Raised Fill
-      </Button>
-
-      <Button round>Round</Button>
-      <Button round fill>
-        Round Fill
-      </Button>
-
-      <Button outline>Outline</Button>
-      <Button round outline>
-        Outline Round
-      </Button>
-
-      <Button small outline>
-        Small
-      </Button>
-      <Button small round outline>
-        Small Round
-      </Button>
-
-      <Button small fill>
-        Small
-      </Button>
-      <Button small round fill>
-        Small Round
-      </Button>
-
-      <Button large raised>
-        Large
-      </Button>
-      <Button large fill raised>
-        Large Fill
-      </Button>
-
-      <Button large fill raised color="red">
-        Large Red
-      </Button>
-      <Button large fill raised color="green">
-        Large Green
-      </Button>
-    </Block>
-
-    <BlockTitle>Checkbox group</BlockTitle>
-    <List strongIos outlineIos dividersIos>
-      <ListItem checkbox name="my-checkbox" value="Books" title="Books"></ListItem>
-      <ListItem checkbox name="my-checkbox" value="Movies" title="Movies"></ListItem>
-      <ListItem checkbox name="my-checkbox" value="Food" title="Food"></ListItem>
-    </List>
-
-    <BlockTitle>Radio buttons group</BlockTitle>
-    <List strongIos outlineIos dividersIos>
-      <ListItem radio name="radio" value="Books" title="Books"></ListItem>
-      <ListItem radio name="radio" value="Movies" title="Movies"></ListItem>
-      <ListItem radio name="radio" value="Food" title="Food"></ListItem>
-    </List>
-  </Page>
-);
+    return (
+    <Page>
+        <Navbar title="Настройки" backLink />
+        <BlockTitle>Битрейт</BlockTitle>
+        <List strong inset>
+            <ListItem
+                radio
+                radioIcon="start"
+                title="128 кбит/с"
+                checked={bitrate === '128'}
+                onChange={() => handleBitrate('128')}
+            />
+            <ListItem
+                radio
+                radioIcon="start"
+                title="32 кбит/с"
+                checked={bitrate === '32'}
+                onChange={() => handleBitrate('32')}
+            />
+        </List>
+        <BlockTitle>Тема</BlockTitle>
+        <List strong inset>
+            <ListItem
+                radio
+                radioIcon="start"
+                title="Светлая"
+                checked={!darkMode}
+                onChange={() => handleThemeChange(0)}
+            />
+            <ListItem
+                radio
+                radioIcon="start"
+                title="Тёмная"
+                checked={darkMode}
+                onChange={() => handleThemeChange(1)}
+            />
+        </List>
+    </Page>
+)};
 
 export default SettingsPage;
