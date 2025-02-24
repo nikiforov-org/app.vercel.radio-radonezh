@@ -1,6 +1,7 @@
 {
   "name": "radonezh-pwa",
   "private": true,
+  "type": "module",
   "version": "1.0.0",
   "description": "Radonezh PWA",
   "repository": "https://github.com/nikiforov-org/app.web.radio-radonezh",
