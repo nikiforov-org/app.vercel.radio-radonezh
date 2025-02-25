@@ -30,7 +30,7 @@ async function fetchAndWriteData() {
     };
 
     // Записываем данные в файл
-    fs.writeFileSync('./public/shedule.json', JSON.stringify(data, null, 2));
+    fs.writeFileSync('./api/shedule.json', JSON.stringify(data, null, 2));
     console.log('Файл обновлен');
   } catch (error) {
     console.error('Ошибка при получении данных:', error);
