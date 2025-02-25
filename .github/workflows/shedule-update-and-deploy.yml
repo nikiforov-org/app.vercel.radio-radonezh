@@ -1,4 +1,4 @@
-name: Schedule Update and Deploy to Github Pages
+name: Schedule Update and Deploy to Firebase Hosting
 
 on:
   schedule:
@@ -10,22 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Проверка репозитория и переключение на ветку api
+      # Проверка репозитория
       - uses: actions/checkout@v4
-        with:
-          ref: api  # Переключение на ветку api
 
       # Запуск скрипта обновления
       - run: node sheduleUpdate.js
 
-      # Коммит изменений в /docs/shedule.json, если есть изменения
-      - name: Commit and Push Changes
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/shedule.json
-          if ! git diff --cached --quiet; then
-            DATE=$(date -u +"%Y-%m-%d %H:%M:%S")
-            git commit -m "Auto-update: $DATE"
-            git push origin api
-          fi
+      # Деплой в Firebase Hosting
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_RADIO_RADONEZH }}
+          projectId: radio-radonezh
+          channelId: live
