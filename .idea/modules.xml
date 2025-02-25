@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/app.web.radio-radonezh.iml" filepath="$PROJECT_DIR$/.idea/app.web.radio-radonezh.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/vite-pwa.iml" filepath="$PROJECT_DIR$/.idea/vite-pwa.iml" />
     </modules>
   </component>
 </project>
