@@ -11,92 +11,18 @@ jobs:
 
     steps:
       # Проверка репозитория
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # Установка Node.js (версия 18, где доступен глобальный fetch)
-#      - name: Set up Node.js
-#        uses: actions/setup-node@v3
-#        with:
-#          node-version: '18'
+      # Установка зависимостей
+      #- run: npm ci
 
-      # Обновление файла shedule.json (файл сохраняется в корень проекта)
-      - name: Update shedule.json
-        run: |
-          node -e "(async () => {
-            try {
-              const url = 'https://radonezh.ru/ajax/update';
-              const response = await fetch(url);
-              const xmlData = await response.text();
-          
-              // Ищем элементы <p id='current'> и <p id='next'> с помощью RegExp
-              const currentMatch = xmlData.match(/<p[^>]*id=[\"']current[\"'][^>]*>(.*?)<\/p>/);
-              const nextMatch = xmlData.match(/<p[^>]*id=[\"']next[\"'][^>]*>(.*?)<\/p>/);
-          
-              if (!currentMatch || !nextMatch) {
-                console.error('Не найдены элементы с id=\"current\" или id=\"next\"');
-                process.exit(1);
-              }
-          
-              const currentText = (currentMatch[1] || '').trim();
-              const nextText = (nextMatch[1] || '').trim();
-          
-              // Предполагается формат "ВРЕМЯ. Заголовок"
-              const [currentTime, ...currentTitleParts] = currentText.split('.');
-              const [nextTime, ...nextTitleParts] = nextText.split('.');
-          
-              const currentTitle = currentTitleParts.join('.').trim();
-              const nextTitle = nextTitleParts.join('.').trim();
-          
-              const data = {
-                current: { time: currentTime, title: currentTitle },
-                next: { time: nextTime, title: nextTitle }
-              };
-          
-              require('fs').writeFileSync('./public/shedule.json', JSON.stringify(data, null, 2));
-              console.log('Файл shedule.json обновлен в корне проекта');
-            } catch (error) {
-              console.error('Ошибка при получении данных:', error);
-              process.exit(1);
-            }
-          })();"
+      # Запуск скрипта обновления
+      - run: node sheduleUpdate.js
 
-      # Деплой на Firebase Hosting
-      - name: Deploy to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
+      # Деплой в Firebase Hosting
+      - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_RADIO_RADONEZH }}
           projectId: radio-radonezh
           channelId: live
-
-
-
-#name: Schedule Update and Deploy to Firebase Hosting
-#
-#on:
-#  schedule:
-#    - cron: '*/1 * * * *'  # Каждый 1 минуту
-#  workflow_dispatch:
-#
-#jobs:
-#  build_and_deploy:
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      # Проверка репозитория
-#      - uses: actions/checkout@v4
-#
-#      # Установка зависимостей
-#      - run: npm ci
-#
-#      # Запуск скрипта обновления
-#      - run: node sheduleUpdate.js
-#
-#      # Деплой в Firebase Hosting
-#      - uses: FirebaseExtended/action-hosting-deploy@v0
-#        with:
-#          repoToken: ${{ secrets.GITHUB_TOKEN }}
-#          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_RADIO_RADONEZH }}
-#          projectId: radio-radonezh
-#          channelId: live
