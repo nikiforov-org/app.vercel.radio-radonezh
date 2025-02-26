@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "serve": "vercel dev",
     "dev": "vite --port 3000",
     "build": "vitest run && tsc -b && vite build && npx workbox generateSW workbox-config.cjs",
     "lint": "eslint .",
