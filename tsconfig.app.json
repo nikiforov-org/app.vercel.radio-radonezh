@@ -32,6 +32,6 @@
     /* Add Vitest types */
     "types": ["vitest"]
   },
-  "include": ["api", "src"],
+  "include": ["src"],
   "exclude": ["**/*.test.ts", "**/*.test.tsx"]
 }

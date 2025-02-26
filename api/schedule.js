@@ -1,4 +1,4 @@
-export async function GET(): Promise<Response> {
+export async function GET(request) {
   const url = 'https://radonezh.ru/ajax/update';
 
   try {
@@ -15,9 +15,7 @@ export async function GET(): Promise<Response> {
 
     if (!current || !next) {
       return new Response(
-        JSON.stringify({
-          error: 'Не найдены элементы с id="current" или id="next"',
-        }),
+        JSON.stringify({ error: 'Не найдены элементы с id="current" или id="next"' }),
         { status: 500, headers: { 'Content-Type': 'application/json' } },
       );
     }
@@ -34,10 +32,7 @@ export async function GET(): Promise<Response> {
     });
   } catch (error) {
     return new Response(
-      JSON.stringify({
-        error: 'Ошибка при получении данных',
-        details: error instanceof Error ? error.toString() : String(error),
-      }),
+      JSON.stringify({ error: 'Ошибка при получении данных', details: error.toString() }),
       { status: 500, headers: { 'Content-Type': 'application/json' } },
     );
   }
@@ -46,18 +41,13 @@ export async function GET(): Promise<Response> {
 /**
  * Удаляет HTML-теги, разделяет строку по первой точке и извлекает время и заголовок.
  */
-function processText(text: string): { time: string; title: string } {
+function processText(text) {
   const cleanedText = text.replace(/<[^>]+>/g, '').trim();
   const [timePart, ...titleParts] = cleanedText.split('.');
   const timeTokens = timePart.trim().split(' ');
   const timeOnly = timeTokens[timeTokens.length - 1].trim();
   const title = titleParts.join('.').trim();
   return { time: timeOnly, title };
-}
-
-interface PElement {
-  $: { id: string };
-  _: string;
 }
 
 /**
@@ -67,9 +57,8 @@ interface PElement {
  *   <p id="next">...</p>
  * </update>
  */
-function parseXml(xml: string): { update: { p: PElement[] } } {
-  // Явно указываем тип для пустого массива p
-  const result: { update: { p: PElement[] } } = { update: { p: [] } };
+function parseXml(xml) {
+  const result = { update: { p: [] } };
   const pRegex = /<p\s+id="([^"]+)"\s*>([\s\S]*?)<\/p>/g;
   let match;
   while ((match = pRegex.exec(xml)) !== null) {
