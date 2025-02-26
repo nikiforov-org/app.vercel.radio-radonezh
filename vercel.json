@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/v1/schedule",
+      "destination": "https://radonezh.ru/ajax/update"
+    }
+  ]
+}
