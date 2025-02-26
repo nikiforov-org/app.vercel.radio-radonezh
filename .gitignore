@@ -33,3 +33,4 @@ Thumbs.db
 
 # Production build
 dist/
+/api/**/*.js
