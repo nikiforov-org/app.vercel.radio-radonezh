@@ -1,4 +1,4 @@
-export async function GET(request) {
+export async function GET(): Promise<Response> {
   const url = 'https://radonezh.ru/ajax/update';
 
   try {
@@ -15,7 +15,9 @@ export async function GET(request) {
 
     if (!current || !next) {
       return new Response(
-        JSON.stringify({ error: 'Не найдены элементы с id="current" или id="next"' }),
+        JSON.stringify({
+          error: 'Не найдены элементы с id="current" или id="next"',
+        }),
         { status: 500, headers: { 'Content-Type': 'application/json' } },
       );
     }
@@ -32,7 +34,10 @@ export async function GET(request) {
     });
   } catch (error) {
     return new Response(
-      JSON.stringify({ error: 'Ошибка при получении данных', details: error.toString() }),
+      JSON.stringify({
+        error: 'Ошибка при получении данных',
+        details: error instanceof Error ? error.toString() : String(error),
+      }),
       { status: 500, headers: { 'Content-Type': 'application/json' } },
     );
   }
@@ -41,7 +46,7 @@ export async function GET(request) {
 /**
  * Удаляет HTML-теги, разделяет строку по первой точке и извлекает время и заголовок.
  */
-function processText(text) {
+function processText(text: string): { time: string; title: string } {
   const cleanedText = text.replace(/<[^>]+>/g, '').trim();
   const [timePart, ...titleParts] = cleanedText.split('.');
   const timeTokens = timePart.trim().split(' ');
@@ -57,7 +62,7 @@ function processText(text) {
  *   <p id="next">...</p>
  * </update>
  */
-function parseXml(xml) {
+function parseXml(xml: string): { update: { p: { $: { id: string }; _: string }[] } } {
   const result = { update: { p: [] } };
   const pRegex = /<p\s+id="([^"]+)"\s*>([\s\S]*?)<\/p>/g;
   let match;
