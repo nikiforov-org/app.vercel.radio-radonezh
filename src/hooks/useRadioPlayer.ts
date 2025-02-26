@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import viteEnv from '@/utils/viteEnv.ts';
 
 interface LocalStorageChangeDetail {
   key: string;
@@ -8,7 +9,8 @@ interface LocalStorageChangeDetail {
 
 const getStreamUrl = (): string => {
   const bitrate = localStorage.getItem('bitrate') ?? '128';
-  return import.meta.env[`VITE_STREAM_${bitrate}`] as string;
+  const [streamUri] = viteEnv([`VITE_STREAM_${bitrate}`]);
+  return streamUri;
 };
 
 const useRadioPlayer = () => {

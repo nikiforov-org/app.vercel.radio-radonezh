@@ -26,10 +26,36 @@ export async function GET(request) {
 
     const data = { current: currentData, next: nextData };
 
-    return new Response(JSON.stringify(data), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    if (process.env.VITE_USE_EDGE_CONFIG === '1') {
+      // Пишем данные в EDGE CONFIG
+      return await fetch(`${process.env.EDGE_API}/${process.env.VITE_EDGE_CONFIG_ID}/items`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.VERCEL_API_TOKEN}`,
+        },
+        body: JSON.stringify({
+          items: [
+            {
+              key: 'schedule',
+              value: data,
+              operation: 'update',
+            },
+          ],
+        }),
+      });
+    } else {
+      // Возвращаем JSON
+      return new Response(JSON.stringify(data), {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST',
+          'Access-Control-Allow-Headers': 'Content-Type',
+        },
+      });
+    }
   } catch (error) {
     return new Response(
       JSON.stringify({ error: 'Ошибка при получении данных', details: error.toString() }),
