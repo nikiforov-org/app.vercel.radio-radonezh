@@ -8,7 +8,7 @@ module.exports = {
 
   runtimeCaching: [
     {
-      urlPattern: /\/schedule\.json$/,
+      urlPattern: /\/api\/schedule$/, // /api/schedule
       handler: 'NetworkFirst',
       options: {
         cacheName: 'schedule-cache',

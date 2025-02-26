@@ -55,6 +55,11 @@ function processText(text: string): { time: string; title: string } {
   return { time: timeOnly, title };
 }
 
+interface PElement {
+  $: { id: string };
+  _: string;
+}
+
 /**
  * Простейший парсер XML для структуры:
  * <update>
@@ -62,8 +67,9 @@ function processText(text: string): { time: string; title: string } {
  *   <p id="next">...</p>
  * </update>
  */
-function parseXml(xml: string): { update: { p: { $: { id: string }; _: string }[] } } {
-  const result = { update: { p: [] } };
+function parseXml(xml: string): { update: { p: PElement[] } } {
+  // Явно указываем тип для пустого массива p
+  const result: { update: { p: PElement[] } } = { update: { p: [] } };
   const pRegex = /<p\s+id="([^"]+)"\s*>([\s\S]*?)<\/p>/g;
   let match;
   while ((match = pRegex.exec(xml)) !== null) {
